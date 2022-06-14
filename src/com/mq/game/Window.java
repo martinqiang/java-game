@@ -58,6 +58,7 @@ public class Window {
         canvas.setPreferredSize(new Dimension(width, height));
         canvas.setSize(width, height);
         canvas.setIgnoreRepaint(true);
+        canvas.addKeyListener(Keyboard.getListener());
         frame.add(canvas);
 
         frame.pack();
@@ -88,7 +89,7 @@ public class Window {
                 for (int i = 0; i < Renderer.pixels.length; i++){ // For every pixel in pixels
                     int x = i % Renderer.GAME_WIDTH;
                     int y = i / Renderer.GAME_WIDTH;
-                    backBuffer.setRGB(x,y,rgb_palette[Renderer.pixels[i]]);
+                    backBuffer.setRGB(x,y,Renderer.pixels[i]);
                 }
 
                 // Keep the game screen the same aspect ratio if window is resized.

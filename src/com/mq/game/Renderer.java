@@ -1,5 +1,10 @@
 package com.mq.game;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Renderer {
     // Renderer //
     public static final int GAME_WIDTH = 384, GAME_HEIGHT = 256;
@@ -32,12 +37,35 @@ public class Renderer {
         return palette;
 
     }
+    // Function for generating the palette used in the game to use in creating graphics.
+    public static void generatePaletteImage(){
+        int[] rgb_palette = Renderer.generatePalette();
+        BufferedImage palette = new BufferedImage(256,1, BufferedImage.TYPE_INT_RGB);
+        for (int i = 0; i < rgb_palette.length; i++){
+            palette.setRGB(i,0,rgb_palette[i]);
+        }
+        try {
+            File outputFile = new File("res/palette.jpg");
+            ImageIO.write(palette, "jpg", outputFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
     public static void fillRect(int x, int y, int h, int w, int colour) {
         // Fill a rectangle at specified location of screen with specified colour
         for (int yy = y; yy < y + h && yy < Renderer.GAME_HEIGHT; yy++){
             for (int xx = x; xx < x + w && xx < Renderer.GAME_WIDTH; xx++){
                 pixels[xx + yy * Renderer.GAME_WIDTH] = colour;
+            }
+        }
+    }
+    public static void renderSprite(Sprite sprite, int x, int y) {
+        for (int xx = x, xs = 0; xx < x + sprite.width; xx++, xs++){
+            for (int yy = y, ys = 0; yy < y + sprite.height; yy++, ys++){
+                int pixel = sprite.pixels[ys*sprite.width + xs];
+                Renderer.pixels[yy * Renderer.GAME_WIDTH + xx] = ((pixel>>24) == 0x00) ? -1 : pixel;
+
             }
         }
     }

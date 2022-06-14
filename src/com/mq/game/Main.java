@@ -7,12 +7,17 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.*;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Main {
 
     public static int xPos = 0;
+    private static Player player;
 
+    public static void init() {
+        player = new Player();
+    }
 
     public static void tick() {
         // To run every tick
@@ -28,22 +33,22 @@ public class Main {
 //            Renderer.pixels[i] = xPos;
 //        }
         // Render test for diagonal moving all palette colours
-        int vert = 0;
-        int colour = 0;
-        for (int i = 0; i < Renderer.pixels.length; i++){
-//            Renderer.fillRect(i%Renderer.GAME_WIDTH,i/Renderer.GAME_WIDTH,1,1,xPos);
-            if (i % Renderer.GAME_WIDTH == 0){
-                vert = xPos;
-                if (xPos < 255) {
-                    xPos++;
-                } else {
-                    xPos = 1;
-                }
-            }
-            vert = vert < 255 ? vert + 1 : 1;
-            Renderer.pixels[i] = vert;
-
-        }
+//        int vert = 0;
+//        int colour = 0;
+//        for (int i = 0; i < Renderer.pixels.length; i++){
+////            Renderer.fillRect(i%Renderer.GAME_WIDTH,i/Renderer.GAME_WIDTH,1,1,xPos);
+//            if (i % Renderer.GAME_WIDTH == 0){
+//                vert = xPos;
+//                if (xPos < 255) {
+//                    xPos++;
+//                } else {
+//                    xPos = 1;
+//                }
+//            }
+//            vert = vert < 255 ? vert + 1 : 1;
+//            Renderer.pixels[i] = vert;
+//
+//        }
         // Render test for diagonal moving all palette colours
 //        for (int i = 0; i < pixels.length; i++){
 //            pixels[i] = xPos;
@@ -51,9 +56,13 @@ public class Main {
 //        }
 //        Renderer.fillRect(0,0,255,255,10);
 
+        //player.move(1,1);
+        player.tick();
+
     }
     public static void render() {
-
+        Renderer.fillRect(0,0,256,256,0xFFFFFF);
+        player.render();
     }
     public static void loop(
             // Runnable init,
@@ -116,6 +125,8 @@ public class Main {
     }
     public static void main(String[] args) {
         Window.init("Java Game", 384, 256);
+        init();
+        //Renderer.generatePaletteImage();
         try {
             loop();
         } catch (Exception e){
