@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 public class Keyboard {
     public static final int KEY_UP = KeyEvent.VK_UP;
     public static final int KEY_DOWN = KeyEvent.VK_DOWN;
+    public static final int KEY_LEFT = KeyEvent.VK_LEFT;
+    public static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
 
     public static boolean upPressed;
     public static boolean downPressed;
